@@ -1,0 +1,25 @@
+int main() {
+   /* 
+   Node *node1 = newnode(10);
+   */
+   char *name = "AdhiLee";
+   
+   /* __DATE__, __TIME__, __FILE__, __LINE__ are predefined symbols */
+  #if 1
+  printf("Date : %s\n", __DATE__);
+  printf("Time : %s\n", __TIME__);
+  printf("File : %s\n", __FILE__);
+  printf("Line : %d\n", __LINE__);
+  #endif
+
+  /* The size of various types */
+  printf("The size of pointer     %zu\n", sizeof(root));
+  printf("The size of int         %zu\n", sizeof(int));
+  printf("The size of short       %zu\n", sizeof(short));
+  printf("The size of long        %zu\n", sizeof(long));
+  printf("The size of float       %zu\n", sizeof(float));
+  printf("The size of double      %zu\n", sizeof(double));
+  printf("The size of long double %zu\n", sizeof(long double));
+  printf("The size of char        %zu\n", sizeof(char));
+
+}
