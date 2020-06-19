@@ -6,7 +6,7 @@
 struct Vertex {
   char name;
   int mark;
-  struct Edge* edgelist;
+  struct Edge* firstedge;
 };
 struct Edge {
   struct Vertex* vertex;
@@ -19,10 +19,13 @@ typedef struct Edge Edge;
 
 /*
 
+add edge delete
+add vertex delete
+
 struct vertex {
   int id;
   int mark;
-  struct edge* edgelist;
+  struct edge* firstedge;
   struct vertex* newvertex;
 };
 struct edge {
@@ -41,17 +44,17 @@ typedef struct edge edge;
 Vertex* new_vertex(char name) {
   Vertex* vertex = (Vertex*)malloc(sizeof(Vertex));
   vertex->name = name;
-  vertex->edgelist = NULL;
+  vertex->firstedge = NULL;
   return vertex;
 }
 
 // connect the vertex a to vertex b
-// by adding b to a's linked edgelist!
+// by adding b to a's linked firstedge!
 void do_connect(Vertex* a, Vertex* b) {
   Edge* node = (Edge*)malloc(sizeof(Edge));
   node->vertex = b;
-  node->next = a->edgelist;
-  a->edgelist = node;
+  node->next = a->firstedge;
+  a->firstedge = node;
 }
 
 // connects a to b and b to a
@@ -67,7 +70,8 @@ void visit(Vertex* vertex) {
 
 // do a depth first search
 void do_dfs(Vertex *vertex, int* count) {
-  Edge* p = vertex->edgelist;
+  // *count = 0;
+  Edge* p = vertex->firstedge;
   vertex->mark = ++(*count);
   visit (vertex);
   while (p != 0) {
@@ -80,6 +84,8 @@ void do_dfs(Vertex *vertex, int* count) {
 void dfs(Vertex *graph[]) {
   int i;
   int count = 0;
+  int n_dfs = 0;
+  
   // set all to unvisited
   for (i = 0; i < NUM_VERTEX; i ++) {
     graph[i]->mark = 0;
@@ -87,6 +93,8 @@ void dfs(Vertex *graph[]) {
   // each vertex dfs it
   for (i = 0; i < NUM_VERTEX; i ++) {
     if (graph[i]->mark == 0) {
+      ++n_dfs;
+      printf ("\n num dfs visit - unvisited %5d", n_dfs);
       do_dfs (graph[i], &count);
     }
   }
@@ -108,7 +116,7 @@ void do_bfs(Vertex *vertex, int* count) {
   // while queue is not empty
   while (front != 0) {
     // for vertyex w in V adjacent to the front vertex
-    p = front->vertex->edgelist;
+    p = front->vertex->firstedge;
     while (p != 0) {
       w = p->vertex;
       // if w is marked with 0
@@ -150,7 +158,7 @@ void bfs(Vertex *graph[]) {
 // main function
 int main() {
   
-  // create a adjacency edgelist
+  // create a adjacency firstedge
   Vertex *graph[NUM_VERTEX] = {
     new_vertex('A'), //[0]
     new_vertex('B'), //[1]
