@@ -41,7 +41,7 @@ typedef struct edge edge;
 Vertex* new_vertex(char name) {
   Vertex* vertex = (Vertex*)malloc(sizeof(Vertex));
   vertex->name = name;
-  vertex->edgelist = 0;
+  vertex->edgelist = NULL;
   return vertex;
 }
 
