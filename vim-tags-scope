@@ -1,0 +1,27 @@
+
+Cscope:
+
+export CSCOPE_EDITOR=`which vim`;
+find . -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" -o -name "*.p4" > cscope.files;
+cscope -q -R -b -i cscope.files;
+ctags -L cscope.files
+start with filepath 2; cscope -dqp 2;
+
+:cscope for help
+https://a0gustinus.wordpress.com/2013/06/01/browsing-source-code-in-linux-vimcscope/
+
+Jumping to a symbol(variable or function)’s definition. For example jump to the definition of the function foo
+:cs find g foo
+
+Finding functions calling this function. For example finding the functions who call the function foo
+:cs find c foo
+
+Finding all the references of a symbol. For example finding all the positions where foo appears
+:cs find s foo
+
+Use these - Ctrl-]; Ctrl-T; :q! to go back to scope menu
+
+====
+
+vim:
+:set filetype=c
