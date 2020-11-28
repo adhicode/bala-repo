@@ -3,12 +3,11 @@
 
 // To execute C, please define "int main()"
 
-typedef struct Node {
+typedef struct tnode{
   int    data;
-  struct Node *left;
-  struct Node *right;
+  struct tnode *left;
+  struct tnode *right;
 } Node;
-
 
 Node* newnode(int data)
 {
@@ -19,7 +18,7 @@ Node* newnode(int data)
   
   return newnode;
 }
-
+/*
 Node* insert(Node* node, int data) {
   // 1. If the tree is empty, return a new, single node
   if (node == NULL) {
@@ -30,10 +29,29 @@ Node* insert(Node* node, int data) {
     if (data <= node->data) 
       node->left = insert(node->left, data);
     else 
-      node->right = insert(node->right, data);
+	node->right = insert(node->right, data);
 
     return(node); // return the (unchanged) node pointer
   }
+}
+*/
+
+Node* insert(Node* root, Node *node) {
+	// 1. If the tree is empty, return a new, single node
+	if (!root) {
+		root = node;
+		root->left = NULL;
+		root->right = NULL;
+	}
+	else {
+	// 2. Otherwise, recur down the tree
+	if (node->data < root->data) 
+		root->left = insert(root->left, node);
+	// == & >
+	else 
+		root->right = insert(root->right, node);
+	}
+	return(root); // return current stack node ptr
 }
 
 unsigned int maxdepth(Node *root)
@@ -46,12 +64,22 @@ unsigned int maxdepth(Node *root)
   
     else 
     {  
-      ldepth = maxdepth (root->left);
-      rdepth = maxdepth (root->right);
-  
+     ldepth = maxdepth (root->left);
+     rdepth = maxdepth (root->right);
+
+     // else - ldepth >= rdepth  
+     return ((ldepth < rdepth) ? (rdepth + 1): (ldepth + 1));
+
+      /*
       if (ldepth > rdepth)
           return (ldepth + 1);
-      return (rdepth + 1);
+      else 
+		if (ldepth < rdepth)
+			return (rdepth + 1);
+      		else
+      		// ldepth == rdepth. incr ldepth or rdepth 
+      			return (rdepth + 1);
+	*/
     }
 }
 
@@ -70,10 +98,13 @@ int main() {
   Node *node1 = newnode(10);
   */
   Node *root = NULL;
-  
-  root = insert(NULL, 10); 
-  root = insert(root, 5); 
-  root = insert(root, 15); 
+ 
+  root = insert(NULL, newnode(10)); 
+  root = insert(root, newnode(5)); 
+  root = insert(root, newnode(15)); 
+  root = insert(root, newnode(3)); 
+//  root = insert(root, 5); 
+ // root = insert(root, 15); 
  
   printTree (root);
   

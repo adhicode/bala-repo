@@ -7,11 +7,11 @@ typedef struct Node {
   int    data;
   struct Node *left;
   struct Node *right;
-} Node;
+} Node_t;
 
-Node* newnode(int data)
+Node_t* newnode(int data)
 {
-  Node *newnode = malloc(sizeof(Node));
+  Node_t *newnode = malloc(sizeof(Node_t));
   newnode->data = data;
   newnode->left = NULL;
   newnode->right = NULL;
@@ -19,7 +19,7 @@ Node* newnode(int data)
   return newnode;
 }
 
-Node* insert(Node* node, int data) {
+Node_t* insert(Node_t* node, int data) {
   // 1. If the tree is empty, return a new, single node
   if (node == NULL) {
     return(newnode(data));
@@ -35,7 +35,7 @@ Node* insert(Node* node, int data) {
   }
 }
 
-void printTree(Node* node) {
+void printTree(Node_t* node) {
   if (node == NULL) return;
 
   printTree(node->left);
@@ -47,9 +47,9 @@ void printTree(Node* node) {
 
 int main() {
   /* 
-  Node *node1 = newnode(10);
+  Node_t *node1 = newnode(10);
   */
-  Node *root = NULL;
+  Node_t *root = NULL;
   
   root = insert(NULL, 10); 
   root = insert(root, 5); 

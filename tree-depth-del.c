@@ -203,7 +203,7 @@ void printPaths(Node* node) {
 
   printPathsRecur(node, path, 0);
 }
-
+/* 
 void mirror(Node* node) {
   if (node==NULL) {
     return;
@@ -221,8 +221,26 @@ void mirror(Node* node) {
     node->right = temp;
   }
 } 
+*/
 
+Node* mirror(Node* node) {
 
+	Node* left = NULL;
+	Node* right = NULL;
+		  
+	if (node==NULL) {
+		return NULL;
+	}
+	else {
+	  // do the subtrees
+	  left = mirror(node->left);
+	  right = mirror(node->right);
+
+	  left = node->right;
+	  right = node->right;
+	  return node;
+	}
+}
 
 #define true (1)
 #define false (0)
@@ -297,8 +315,16 @@ int hasPathSum(Node* node, int sum) {
     return(hasPathSum(node->left, (sum - node->data)) ||
            hasPathSum(node->right, (sum - node->data)));
   }
+
 }
 
+unsigned int size (Node* root) {
+
+	if (root == NULL)
+		return 0;
+	else
+		return (1 + size(root->left) + size(root->right));
+}
 
 // Binary search tree
  
@@ -310,6 +336,7 @@ int hasPathSum(Node* node, int sum) {
    
    
    root = insert(NULL, 10); 
+   /*
    root = insert(root, 5); 
    root = insert(root, 15); 
    root = insert(root, 3); 
@@ -317,6 +344,7 @@ int hasPathSum(Node* node, int sum) {
    root = insert(root, 4); 
    root = insert(root, 0); 
    root = insert(root, 7); 
+   */
    //root = insert(root, 12); 
    //root = insert(root, 22); 
    printTree (root);
@@ -345,6 +373,8 @@ int hasPathSum(Node* node, int sum) {
    
    printf("\n hasPathSum 19 = %d", hasPathSum(root, 19));
    printf("\n");
+
+   printf("size = %u \n", size(root));
    
    Delete(root, 0);
    printTree (root);
@@ -360,6 +390,7 @@ int hasPathSum(Node* node, int sum) {
    printf("root key = %d \n", root->data);
    printTree (root);
    printf("\n");
+   printf("size = %u \n", size(root));
    return 0;
  }
  
