@@ -5,6 +5,3 @@
 <unit test results for ipv4 uc and mc addresses>
 2) ./patricia
 
-3) prefix aggregation is underway - tracking route changes.
-
-4) ipv6 not tested
