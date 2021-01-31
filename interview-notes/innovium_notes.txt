@@ -1,0 +1,189 @@
+Pend:
+
+SAI ACL Table, Group, QoS
+Netlink socket
+SONiC few containers to study. SWSS, Orchagent, SyncD, DB, BGP 
+
+pending:
+How storm control is implemented?
+Packet buffer segments - quaranteed, PQ, etc?
+TxQ, QoS, L3, FDB, ACL table fields.
+IPFIX
+CPSS NetIf 
+HIR
+
+Linux:
+pend:
+DMA and UIO drivers
+DTB
+Netdev
+
+Order: SAI/SONic; C/Linux prog; Marvell; Cisc
+
+
+--
+Duration: 3hrs.
+Datastructures 
+Stacks
+Queues
+Deque
+BST
+Hash tables
+
+Algorithms:
+Sorting - Insertion, selection, merge sort, heap sort
+Searching
+
+C programming
+reverse ll
+tree traversal
+tree print all nodes
+tree print leaf
+tree print leve nodes
+tree print weight of paths
+tree print spf
+malloc program
+
+Linux programs:
+UIO
+DMA
+Pcap library
+Netstack overview
+Device tree (DTB)
+
+OS concepts/code:
+
+semaphore; sem_t sem01; sem_init, sem_post, sem_wait, sem_destroy 
+pthread.h; pthread_t thr01; pthread_create, pthread_join
+shared mem;
+execve;
+process creation; fork
+
+Linux core file
+
+--
+Duration: 2 hrs
+SAI API - organization of APIs, context, mutex, SAI driver, SAI host adapator, init, HA, reset-warm/cold
+SAI Pipeline
+SAI Neighbor, RIF, FDB, ACL Table, ACL group
+SAI ACL Table, Group
+overview of objects
+Host interface
+SONiC Arch
+SONiC ARP/other CPU packets reception
+SONiC Mgnt interfaces - ansible, SNMP, yang, etc
+SONiC BGP issue fix
+-- fpmsyncd:/fpmlink.cpp. accept
+-- socklen_t is not initialized 
+-- socklen_t client_len = sizeof(struct sockaddr_in);
+SONiC directory overview
+Aldrin  - SAI/SONiC integration
+ -- SAI / SONiC releases
+ -- Scope and milestones
+ -- contributions
+ -- SONiC test cases; PTF
+ -- 48 1g + 4 10g. 2k ingress policers/meters. 1k vlan. 16k fdb
+ -- 201811 SONiC
+ -- v1.0 to 1.3 SAI
+Netlink socket
+Open Network Install Environment (ONIE)
+Pend:
+
+SAI ACL Table, Group
+Netlink socket
+SONiC few containers to study. SWSS, SyncD, DB, BGP 
+
+--
+Duration: 2hrs
+Marvell related:
+marvell data path - xCat3: PCL, L2 FDB, LAG, STP, L3, QoS tables
+marvell DSA - how the ingress switches differ from egress in forwarding? How the decisions are carried? DSA is capable of carrying all decisions like add VLAN TAG?
+HAL - organization of APIs, context, mutex, host adapator, init, HA, reset-warm/cold
+QoS - https://archive.nanog.org/meetings/nanog44/presentations/Sunday/Tad_qos_primer_N44.pdf
+Traffic Manager; basic overview
+CPU Rx/Tx
+DMA transfer
+Linux UIO
+Kernel drivers; do DMA operation and map to user space(zero copy)
+IPFIX, sFlow; feature overview
+INT; feature overview
+ECN packet format
+PCIe HIR feature; feature in-depth understanding
+PCIe basics
+Times - MAC aging, ARP aging, etc
+mac_age(time in seconds),  0, 10-1000000 secs
+
+pending:
+How storm control is implemented?
+Packet buffer segments - quaranteed, PQ, etc?
+QoS, L3, FDB, ACL table fields.
+IPFIX
+CPSS NetIf 
+HIR
+--
+--
+Duration: 1hr
+Cisco related:
+LACP
+xSTP
+FP
+VxLAN
+HSRP
+vPC
+MPLS 
+L2 VPN (Ethernet packet over tunnels)
+Ethernet L2 header over <some> tunnels: oMPLS, oIP, oGRE, etc
+Pseudowire, leased line, Virtual private wire
+
+VPLS - Virtual Private LAN service
+ 
+L3 VPN (IP packet over tunnels)
+--
+
+
+
+===
+
+SAI notes:
+ 
+* sai_api_t (api categories - ACL, FDB, PORT, ROUTE, VLAN, etc)
+logical ASIC blocks
+
+* sai_object_id_t -> uint64
+
+* sai_object_type_t -> Objects that have data to operate
+(Port, LAG, STP, ACL_ENTRY, ACL_COUNTER, ACL_TABLE_GROUP, etc)
+
+* SAI objects and its attributes
+
+* Object operations - create, del, set, get
+
+
+sai_api_query(SAI_API_SWITCH, (void**)&sai_switch_api);
+
+    constexpr std::uint32_t attrSz = 6;
+
+    sai_attribute_t attr[attrSz];
+    std::memset(attr, '\0', sizeof(attr));
+
+    attr[0].id = SAI_SWITCH_ATTR_INIT_SWITCH;
+    attr[0].value.booldata = true;
+
+    attr[1].id = SAI_SWITCH_ATTR_SWITCH_STATE_CHANGE_NOTIFY;
+    attr[1].value.ptr = reinterpret_cast<sai_pointer_t>(&on_switch_state_change);
+
+    attr[2].id = SAI_SWITCH_ATTR_SHUTDOWN_REQUEST_NOTIFY;
+    attr[2].value.ptr = reinterpret_cast<sai_pointer_t>(&on_shutdown_request);
+
+    attr[3].id = SAI_SWITCH_ATTR_FDB_EVENT_NOTIFY;
+    attr[3].value.ptr = reinterpret_cast<sai_pointer_t>(&on_fdb_event);
+
+    attr[4].id = SAI_SWITCH_ATTR_PORT_STATE_CHANGE_NOTIFY;
+    attr[4].value.ptr = reinterpret_cast<sai_pointer_t>(&on_port_state_change);
+
+    attr[5].id = SAI_SWITCH_ATTR_PACKET_EVENT_NOTIFY;
+    attr[5].value.ptr = reinterpret_cast<sai_pointer_t>(&on_packet_event);
+
+    sai_status_t status = sai_switch_api->create_switch(&gSwitchId, attrSz, attr);
+
+

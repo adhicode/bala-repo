@@ -1,0 +1,46 @@
+
+
+VxLAN BGP EVPN:
+
+Single data plane across multisites
+Multi dataplane using DCI between sites
+Distributed Anycast Gateway
+
+Multi-tenancy: Multi-tenancy is a mode of operation where multiple independent instances (Layer-3 VRFs, Layer-2 VLANs)
+of a tenant (business entity, user group, applications, or security) operate in a shared environment (VXLAN
+BGP EVPN fabric), while ensuring logical segmentation between the instances. The tenant instances such as
+VRF and VLANs are logically isolated but physically operate on the same fabric.
+The 1:1 mapping between the parent VLAN and the VNI should be configured on the ToR switch.
+
+Private VLAN?
+
+Optimized LPM tree:
+https://github.com/pedrorsmoreira/prefix_tree/tree/master/code
+
+BGP prefix analysis - Prefix changes tracking.
+https://www.cs.princeton.edu/~jrex/papers/imc09.pdf
+notes: (i) how many prefixes cover each IP address? and (ii) what fraction of addresses covered by a prefix actually use that prefix for packet forwarding?
+
+BGP route aggregation
+https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/5441-aggregation.html
+
+FRR BGP
+http://docs.frrouting.org/projects/dev-guide/en/latest/next-hop-tracking.html
+
+API:
+Route add
+Route delete
+register address for tracking
+Unregister address for tracking
+
+Given a tree of routes and and an IP address to track, return the longest matching route with the nexthop.. Track further changes to the prefix tree and invoke application callback with the new route (if changed)
+Minimum API list
+  - Route add/delete
+  - Register/un-register address for tracking
+Free to choose any open-source implementation of a suitable tree data structure.
+Deliverable should include compiled and tested code and a set of runnable unit tests.
+
+
+CIDR
+Route-prefix
+
