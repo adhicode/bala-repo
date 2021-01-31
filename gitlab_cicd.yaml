@@ -1,0 +1,59 @@
+stages:
+  - build
+  - deploy
+  - test
+
+
+variables:
+    K: sudo k3s kubectl
+
+#build:
+#  stage: build
+#  tags:
+#   - build
+#  script:
+#          - cd /home/cicd/myprojects/oopt-goldstone
+#          - sudo git submodule update --init
+#          - sudo make builder
+#          - sudo make docker
+         
+#deploy:
+#  stage: deploy
+#  tags:
+#   - deploy
+#  script:
+#         - cd /home/cicd/myprojects/oopt-goldstone/builds/amd64/installer/installed/builds
+#         - export imagename=$(ls -ltr | tr -s " " | tail -2 | cut -d" " -f9 | grep -v md5sum)
+#         - tftp 172.26.1.38 -c put $imagename
+
+test:
+  stage: test
+  tags:
+   - test
+  script:
+         #- scp -r /home/cicd/myprojects/oopt-goldstone/builds/amd64/installer/installed/builds/goldstone-master_ONL-OS_2020-09-04.0622-8b09828_AMD64_INSTALLED_INSTALLER root@172.26.1.74:/var/log
+         - ssh root@172.26.1.74 "reboot"
+         #- onie-nos-install 
+         - echo "Sucess"
+         #- ssh -tt root:x1@172.26.1.74
+         #- export imagename=$(ls -ltr | tr -s " " | tail -2 | cut -d" " -f9 | grep -v md5sum)
+         #- tftp 172.26.1.38 -c put $imagename
+		 
+		 login to the physical device (ssh root@console ip)
+		 reboot
+		 scp new ONIE from tftp to physical device
+		 onie-nos-install goldstone-master_ONL-OS_2020-09-03.0616-8b09828_AMD64_INSTALLED_INSTALLER
+		 reboot
+
+
+
+
+  10.1.1.2                       10.1.1.1             
+gitlab                           repo
+              ssh/shell(executor)
+sourcecode   ---------------     
+gitlab-ci.yaml
+
+master
+
+branch1 modify
