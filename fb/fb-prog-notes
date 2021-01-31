@@ -1,0 +1,19 @@
+
+recurison rules: Better to return some value than void - NULL, current-node, value;
+
+BST:
+is BST : node key value check between min and max; (node < min || node > max) is false. reset max for left-tree, reset min for right-tree
+size: null = 0; 1+size(left)+size(right)
+max depth / height:  null = 0;  height(l)<height(r)? r+1: l+1
+in-order: node(left); node; node(right)
+post-order: node(right); node; node(left)
+pre-order: node; node(left); node(right)
+min-value: far-left holds min key; while(node->left) node->key;
+max-value: far-right holds max key; while(node->right) node-key;
+all-paths:
+longest-path:
+shortest-path:
+bfs: 
+nchild-node: child for each node;
+invert-tree; mirror tree;
+
